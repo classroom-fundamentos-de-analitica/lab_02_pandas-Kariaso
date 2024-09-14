@@ -175,9 +175,8 @@ def pregunta_10():
     4   E  1:1:2:3:3:4:5:5:5:6:7:8:8:9
     """
 
-    result = tbl0.groupby('_c1')['_c2'].apply(lambda x: ':'.join(sorted(map(str, x)))).reset_index()
-    
-    return result
+    result = tbl0.groupby('_c1')['_c2'].apply(lambda x: ':'.join(map(str, sorted(x))))
+    return result.reset_index()
 
 def pregunta_11():
     """
@@ -216,9 +215,9 @@ def pregunta_12():
     39   39                    ggg:3,hhh:8,jjj:5
     """
 
-    tbl2["ab"] = tbl2["_c5a"] + ":" + tbl2["_c5b"].astype(str)
-    result = tbl2.groupby("_c0")["ab"].apply(lambda x: ",".join(sorted(x))).reset_index()
-
+    tbl2['c5'] = tbl2['_c5a'] + ':' + tbl2['_c5b'].astype(str)
+    result = tbl2.groupby('_c0')['c5'].apply(lambda x: ','.join(sorted(x))).reset_index()
+    result.columns = ['_c0', '_c5']
     return result
 
 
