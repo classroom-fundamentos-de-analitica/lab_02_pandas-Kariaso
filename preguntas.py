@@ -99,8 +99,7 @@ def pregunta_06():
 
     """
 
-    return tbl1["_c4"].str.upper().sort_values().unique()
-
+    return sorted(tbl1["_c4"].str.upper().unique().tolist())
 
 def pregunta_07():
     """
@@ -136,10 +135,8 @@ def pregunta_08():
     """
 
     tbl0["suma"] = tbl0["_c0"] + tbl0["_c2"]
-
-    tbl0.to_csv('tbl0.tsv', index=False, sep="\t")
-
-    return print(tbl0)
+    
+    return tbl0
 
 
 def pregunta_09():
@@ -158,10 +155,9 @@ def pregunta_09():
 
     """
 
-    tbl0["year"] = tbl0["_c3"].apply(lambda x: x.split("-")[0])
-    tbl0.to_csv('tbl0.tsv', index=False, sep="\t")
-
-    return print(tbl0)
+    tbl0["year"] = tbl0["_c3"].str.split("-").str[0]
+    
+    return tbl0
 
 
 def pregunta_10():
@@ -179,8 +175,9 @@ def pregunta_10():
     4   E  1:1:2:3:3:4:5:5:5:6:7:8:8:9
     """
 
-    return tbl0.sort_values(["_c1", "_c2"]).groupby("_c1")["_c2"].apply(lambda x: ":".join(map(str, x))).reset_index()
-
+    result = tbl0.groupby('_c1')['_c2'].apply(lambda x: ':'.join(sorted(map(str, x)))).reset_index()
+    
+    return result
 
 def pregunta_11():
     """
@@ -220,8 +217,9 @@ def pregunta_12():
     """
 
     tbl2["ab"] = tbl2["_c5a"] + ":" + tbl2["_c5b"].astype(str)
+    result = tbl2.groupby("_c0")["ab"].apply(lambda x: ",".join(sorted(x))).reset_index()
 
-    return tbl2.sort_values(["_c0", "_c5a"]).groupby("_c0")["ab"].apply(lambda x: ",".join(map(str, x))).reset_index()
+    return result
 
 
 def pregunta_13():
